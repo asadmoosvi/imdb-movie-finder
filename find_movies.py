@@ -5,7 +5,7 @@ import argparse
 import sys
 import sqlite3
 
-def main(argv: list = None) -> None:
+def main(argv: list = None) -> int:
     db_name = 'imdb.db'
     with sqlite3.connect(db_name) as conn:
         cur = conn.cursor()
