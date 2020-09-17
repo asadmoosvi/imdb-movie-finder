@@ -44,7 +44,7 @@ def main(argv: list = None) -> int:
         ]
 
         print(
-            f'{headings[0]:<8}'
+            f'{headings[0]:<15}'
             f'{headings[1]:<60}'
             f'{headings[2]:<10}'
             f'{headings[3]:<10}'
@@ -52,7 +52,7 @@ def main(argv: list = None) -> int:
             f'{headings[5]:<10}'
             f'{headings[6]:<15}'
         )
-        print('-' * 140)
+        print('-' * 144)
         total_results_found = 0
         while result:
             title_type = result[1].lower()
@@ -86,7 +86,7 @@ def main(argv: list = None) -> int:
                     and valid_genre and valid_rating
                     and valid_num_ratings):
                 print(
-                    f'{title_type:<8}'
+                    f'{title_type:<15}'
                     f'{primary_title:<60}'
                     f'{is_adult:<10}'
                     f'{year:<10}'
