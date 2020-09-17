@@ -52,7 +52,7 @@ def main(argv: list = None) -> int:
             f'{headings[5]:<10}'
             f'{headings[6]:<15}'
         )
-        print('-' * 144)
+        print('-' * 155)
         total_results_found = 0
         while result:
             title_type = result[1].lower()
