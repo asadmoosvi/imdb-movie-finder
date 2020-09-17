@@ -15,7 +15,7 @@ It uses the data provided directly by IMDB on their website at [IMDB Datasets](h
 
 By default without any arguments, it lists all the movies in the database.
 
-## Help Menu
+# Help Menu
 
 ```
 usage: find_movies.py [-h] [-t {tv,movie,short} [{tv,movie,short} ...]] [-n NAME] [-a] [-y YEAR] [-g GENRE [GENRE ...]] [-r RATING] [-nr NUM_RATINGS] [-ob {name,year,rating,num-ratings}] [--reverse]
