@@ -92,7 +92,7 @@ def main(argv: list = None) -> int:
                     f'{year:<10}'
                     f"{', '.join(genres):<30}"
                     f'{rating:<10}'
-                    f'{num_ratings:<15}'
+                    f'{int(num_ratings):<15,}'
                 )
                 total_results_found += 1
                 if args.limit:
