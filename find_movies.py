@@ -85,6 +85,9 @@ def main(argv: list = None) -> int:
                     and valid_is_adult and valid_year
                     and valid_genre and valid_rating
                     and valid_num_ratings):
+                # strip off long titles and end them with an asterisk
+                if len(primary_title) > 58:
+                    primary_title = primary_title[:58] + '*'
                 print(
                     f'{title_type:<15}'
                     f'{primary_title:<60}'
