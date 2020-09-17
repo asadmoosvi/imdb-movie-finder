@@ -48,7 +48,7 @@ def main(argv: list = None) -> int:
             f'{headings[1]:<60}'
             f'{headings[2]:<10}'
             f'{headings[3]:<10}'
-            f'{headings[4]:<30}'
+            f'{headings[4]:<40}'
             f'{headings[5]:<10}'
             f'{headings[6]:<15}'
         )
@@ -90,7 +90,7 @@ def main(argv: list = None) -> int:
                     f'{primary_title:<60}'
                     f'{is_adult:<10}'
                     f'{year:<10}'
-                    f"{', '.join(genres):<30}"
+                    f"{', '.join(genres):<40}"
                     f'{rating:<10}'
                     f'{int(num_ratings):<15,}'
                 )
