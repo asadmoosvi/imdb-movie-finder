@@ -11,7 +11,8 @@ def main(argv: list = None) -> int:
         cur = conn.cursor()
         # order by
         args = parse_args()
-        print(args)
+        if not args.quiet:
+            print(args)
 
         if args.order_by == 'name':
             order_by = 'primaryTitle'
@@ -22,14 +23,17 @@ def main(argv: list = None) -> int:
         else:
             order_by = 'numVotes'
 
-        print(f'order_by = {order_by}')
+        if not args.quiet:
+            print(f'order_by = {order_by}')
         if not args.reverse:
             sort_direction = 'ASC'
         else:
             sort_direction = 'DESC'
 
-        print(f'Sort direction: {sort_direction}')
-        print('\nSearching for movies based on the criteria provided...\n')
+        if not args.quiet:
+            print(f'Sort direction: {sort_direction}')
+            print('\nSearching for movies based on the criteria provided...\n')
+
         cur.execute(f'''
             SELECT * from title_basics
             INNER JOIN title_ratings USING (tconst)
@@ -159,6 +163,10 @@ def parse_args(argv: list = None) -> argparse.Namespace:
     parser.add_argument(
         '-l', '--limit', help='limit search results to the amount specified by COUNT',
         metavar='COUNT', type=int
+    )
+    parser.add_argument(
+        '-q', '--quiet', help='quiet mode: only output results and no status messages',
+        action='store_true'
     )
     args = parser.parse_args()
     return args
