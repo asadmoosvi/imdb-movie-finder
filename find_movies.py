@@ -40,7 +40,8 @@ def main(argv: list = None) -> int:
 
         headings = [
             'Type', 'Name', 'Adult', 'Year',
-            'Genres', 'Rating', 'Ratings'
+            'Genres', 'Rating', 'Ratings',
+            'IMDB Link'
         ]
 
         print(
@@ -51,10 +52,13 @@ def main(argv: list = None) -> int:
             f'{headings[4]:<40}'
             f'{headings[5]:<10}'
             f'{headings[6]:<15}'
+            f'{headings[7]:<15}'
         )
-        print('-' * 155)
+        print('-' * 197)
         total_results_found = 0
         while result:
+            tconst = result[0]
+            imdb_link = 'http://www.imdb.com/title/' + tconst
             title_type = result[1].lower()
             if title_type.startswith('tv'):
                 title_type = 'tv'
@@ -96,6 +100,7 @@ def main(argv: list = None) -> int:
                     f"{', '.join(genres):<40}"
                     f'{rating:<10}'
                     f'{int(num_ratings):<15,}'
+                    f'{imdb_link:<15}'
                 )
                 total_results_found += 1
                 if args.limit:
