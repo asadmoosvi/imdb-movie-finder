@@ -55,7 +55,7 @@ with sqlite3.connect('imdb.db') as conn:
     print(':: Created DB imdb.db')
     print(
         f':: Importing data from {title_basics_filename} and'
-        f' {title_basics_filename}...'
+        f' {title_ratings_filename}...'
     )
 
     print('\n:: Inserting into title_basics table...')
