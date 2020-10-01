@@ -2,9 +2,21 @@ import gzip
 import os
 import sys
 import sqlite3
+import requests
 
 title_basics_filename = 'title.basics.tsv.gz'
 title_ratings_filename = 'title.ratings.tsv.gz'
+
+
+def download_file(imdb_filename: str) -> None:
+    print(f':: Downloading file `{imdb_filename}`...')
+    response = requests.get(
+        f'https://datasets.imdbws.com/{imdb_filename}'
+    )
+    with open(imdb_filename, 'wb') as f:
+        for chunk in response.iter_content(100_000):
+            f.write(chunk)
+
 
 if os.path.exists('imdb.db'):
     print(':: imdb.db already exists.')
@@ -15,17 +27,11 @@ if os.path.exists('imdb.db'):
     else:
         os.remove('imdb.db')
 
-if (
-    not os.path.exists(title_basics_filename)
-    or not os.path.exists(title_ratings_filename)
-):
+if (not os.path.exists(title_basics_filename)
+        or not os.path.exists(title_ratings_filename)):
     print(':: IMDB datasets not found.')
-    print(
-        f':: Please download {title_basics_filename}'
-        f' and {title_ratings_filename} from https://datasets.imdbws.com'
-    )
-    sys.exit(1)
-
+    download_file(title_basics_filename)
+    download_file(title_ratings_filename)
 
 with sqlite3.connect('imdb.db') as conn:
     cur = conn.cursor()
