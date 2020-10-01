@@ -74,4 +74,5 @@ You would need to download the following files:
 - title.basics.tsv.gz
 - title.ratings.tsv.gz
 
-After downloading these files you can run `python create_imdb_db.py` to create the `imdb.db` file. This is a simple SQLite database. After the database has been created, you can use the `find_movies.py` program.
+`imdb.db` is created by running `python create_imdb_db.py`. The datasets will automatically be downloaded
+by this script if they're not found in the same directory. So you don't have to manually download them yourself.
