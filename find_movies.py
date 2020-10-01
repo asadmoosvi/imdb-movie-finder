@@ -4,8 +4,10 @@
 import argparse
 import sys
 import sqlite3
+from typing import Optional, Sequence
 
-def main(argv: list = None) -> int:
+
+def main(argv: Optional[Sequence[str]] = None) -> int:
     db_name = 'imdb.db'
     with sqlite3.connect(db_name) as conn:
         cur = conn.cursor()
@@ -113,6 +115,7 @@ def main(argv: list = None) -> int:
             result = cur.fetchone()
         print(f'\nTotal results found: {total_results_found}')
     return 0
+
 
 def parse_args(argv: list = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
