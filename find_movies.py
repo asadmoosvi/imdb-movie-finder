@@ -117,7 +117,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     return 0
 
 
-def parse_args(argv: list = None) -> argparse.Namespace:
+def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description='Find movies by filtering based on different criteria '
                     'from IMDB database.'
