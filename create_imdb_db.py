@@ -10,9 +10,7 @@ title_ratings_filename = 'title.ratings.tsv.gz'
 
 def download_file(imdb_filename: str) -> None:
     print(f':: Downloading file `{imdb_filename}`...')
-    response = requests.get(
-        f'https://datasets.imdbws.com/{imdb_filename}'
-    )
+    response = requests.get(f'https://datasets.imdbws.com/{imdb_filename}')
     with open(imdb_filename, 'wb') as f:
         for chunk in response.iter_content(100_000):
             f.write(chunk)
@@ -27,15 +25,17 @@ if os.path.exists('imdb.db'):
     else:
         os.remove('imdb.db')
 
-if (not os.path.exists(title_basics_filename)
-        or not os.path.exists(title_ratings_filename)):
+if not os.path.exists(title_basics_filename) or not os.path.exists(
+    title_ratings_filename
+):
     print(':: IMDB datasets not found.')
     download_file(title_basics_filename)
     download_file(title_ratings_filename)
 
 with sqlite3.connect('imdb.db') as conn:
     cur = conn.cursor()
-    cur.execute('''
+    cur.execute(
+        '''
         CREATE TABLE title_basics (
             tconst text,
             titleType text,
@@ -47,15 +47,18 @@ with sqlite3.connect('imdb.db') as conn:
             runtimeMinutes integer,
             genres text
         );
-    ''')
+        '''
+    )
 
-    cur.execute('''
+    cur.execute(
+        '''
         CREATE TABLE title_ratings (
             tconst text,
             averageRating real,
             numVotes real
         );
-    ''')
+        '''
+    )
 
     conn.commit()
     print(':: Created DB imdb.db')
@@ -74,10 +77,13 @@ with sqlite3.connect('imdb.db') as conn:
             for x in range(len(items)):
                 if '\\N' in items[x]:
                     items[x] = ''
-            cur.execute('''
+            cur.execute(
+                '''
                 INSERT INTO title_basics
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-            ''', items)
+                ''',
+                items,
+            )
     conn.commit()
 
     print(':: Inserting into title_ratings table...\n')
@@ -90,10 +96,13 @@ with sqlite3.connect('imdb.db') as conn:
             for x in range(len(items)):
                 if '\\N' in items[x]:
                     items[x] = ''
-            cur.execute('''
+            cur.execute(
+                '''
                 INSERT INTO title_ratings
                 VALUES (?, ?, ?);
-            ''', items)
+                ''',
+                items,
+            )
     conn.commit()
 
     print(':: Data successfully imported to imdb.db database!')

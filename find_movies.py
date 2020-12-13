@@ -36,18 +36,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             print(f'Sort direction: {sort_direction}')
             print('\nSearching for movies based on the criteria provided...\n')
 
-        cur.execute(f'''
+        cur.execute(
+            f'''
             SELECT * from title_basics
             INNER JOIN title_ratings USING (tconst)
             ORDER BY {order_by} {sort_direction}
-        ''')
+            '''
+        )
 
         result = cur.fetchone()
 
         headings = [
-            'Type', 'Name', 'Adult', 'Year',
-            'Genres', 'Rating', 'Ratings',
-            'IMDB Link'
+            'Type',
+            'Name',
+            'Adult',
+            'Year',
+            'Genres',
+            'Rating',
+            'Ratings',
+            'IMDB Link',
         ]
 
         print(
@@ -91,10 +98,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             valid_rating = rating >= args.rating
             valid_num_ratings = num_ratings > args.num_ratings
 
-            if (valid_title_type and valid_primary_title
-                    and valid_is_adult and valid_year
-                    and valid_genre and valid_rating
-                    and valid_num_ratings):
+            if (
+                valid_title_type
+                and valid_primary_title
+                and valid_is_adult
+                and valid_year
+                and valid_genre
+                and valid_rating
+                and valid_num_ratings
+            ):
                 # strip off long titles and end them with an asterisk
                 if len(primary_title) > 58:
                     primary_title = primary_title[:58] + '*'
@@ -120,56 +132,76 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description='Find movies by filtering based on different criteria '
-                    'from IMDB database.'
+        'from IMDB database.'
     )
     parser.add_argument(
-        '-t', '--type', help='title type',
-        nargs='+', choices=['tv', 'movie', 'short'],
-        default=[]
+        '-t',
+        '--type',
+        help='title type',
+        nargs='+',
+        choices=['tv', 'movie', 'short'],
+        default=[],
     )
     parser.add_argument(
-        '-n', '--name', help='starting name of movie/tvshow',
-        action='store', type=str.lower,
-        default=''
+        '-n',
+        '--name',
+        help='starting name of movie/tvshow',
+        action='store',
+        type=str.lower,
+        default='',
     )
     parser.add_argument(
-        '-a', '--adult', help='select adult movies',
-        action='store_true'
+        '-a', '--adult', help='select adult movies', action='store_true'
     )
     parser.add_argument(
-        '-y', '--year', help='minimum start year',
+        '-y', '--year', help='minimum start year', type=int, default=0
+    )
+    parser.add_argument(
+        '-g',
+        '--genres',
+        help='list of genres required',
+        nargs='+',
+        type=str.lower,
+        metavar='GENRE',
+        default=[],
+    )
+    parser.add_argument(
+        '-r',
+        '--rating',
+        help='minimium rating required',
+        type=float,
+        default=0.0,
+    )
+    parser.add_argument(
+        '-nr',
+        '--num-ratings',
+        help='minimum number of ratings',
         type=int,
-        default=0
+        default=0,
     )
     parser.add_argument(
-        '-g', '--genres', help='list of genres required',
-        nargs='+', type=str.lower, metavar='GENRE',
-        default=[]
+        '-ob',
+        '--order-by',
+        help='order results in ascending order based on:'
+        ' name, year, rating, or number of ratings',
+        choices=['name', 'year', 'rating', 'num-ratings'],
+        default='num-ratings',
     )
     parser.add_argument(
-        '-r', '--rating', help='minimium rating required',
-        type=float, default=0.0
+        '--reverse', help='sort by descending order', action='store_true'
     )
     parser.add_argument(
-        '-nr', '--num-ratings', help='minimum number of ratings',
-        type=int, default=0
+        '-l',
+        '--limit',
+        help='limit search results to the amount specified by COUNT',
+        metavar='COUNT',
+        type=int,
     )
     parser.add_argument(
-        '-ob', '--order-by', help='order results in ascending order based on:'
-                                 ' name, year, rating, or number of ratings',
-        choices=['name', 'year', 'rating', 'num-ratings'], default='num-ratings'
-    )
-    parser.add_argument(
-        '--reverse', help='sort by descending order',
-        action='store_true'
-    )
-    parser.add_argument(
-        '-l', '--limit', help='limit search results to the amount specified by COUNT',
-        metavar='COUNT', type=int
-    )
-    parser.add_argument(
-        '-q', '--quiet', help='quiet mode: only output results and no status messages',
-        action='store_true'
+        '-q',
+        '--quiet',
+        help='quiet mode: only output results and no status messages',
+        action='store_true',
     )
     args = parser.parse_args()
     return args
