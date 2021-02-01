@@ -53,7 +53,7 @@ Get movies/tvshows starting from the year 2010 with a rating of at least 7.5 and
 
 
 
-Get only movies with with the genres of comedy or crime that were made after the year of 2015 and order by the rating (ascending by default ,`--reverse` reverses the direction). Only display the top 5 results.
+Get only movies with the genres of comedy or crime that were made after the year of 2015 and order by the rating (ascending by default ,`--reverse` reverses the direction). Only display the top 5 results.
 
 By specifying the genres, this doesn't mean it'll only fetch titles that are comedy and crime only. It just means comedy or crime should be present as the possible genres.
 
